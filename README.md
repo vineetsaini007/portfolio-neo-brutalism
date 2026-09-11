@@ -1,10 +1,6 @@
 # Vineet Saini — developer portfolio
-
 A responsive, reference-inspired portfolio with an original SVG architecture, project concepts, a skills dashboard, an animated terminal, and accessible project dialogs.
 
-## Edit content
-
-`data/portfolio.ts` contains the profile, project descriptions, technology groups, contact URLs, CV URL, employment, and education. Profile, skills, experience, education, certifications and three project links are sourced from the supplied résumé. Project interface previews remain illustrative. The TMS concept is retained from the original brief and is not listed in the résumé. `public/vineet-saini-cv.pdf` is an unmodified copy of the supplied PDF, used by the hero and contact CV download links.
 
 ## Development
 
@@ -12,8 +8,6 @@ A responsive, reference-inspired portfolio with an original SVG architecture, pr
 - `npm run dev` (port 5173)
 - `npx tsc --noEmit`
 - `npm run build`
-
-The Sites starter uses Vinext with Next.js App Router conventions, React 19, TypeScript, and Tailwind CSS. GSAP/ScrollTrigger owns viewport motion and pointer interactions, avoiding competing transform writers. Motion effects and the decorative cursor respect reduced-motion preferences. Dialogs support focus trapping and Escape via Radix UI.
 
 ## Structure
 
