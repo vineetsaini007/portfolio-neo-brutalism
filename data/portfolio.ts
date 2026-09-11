@@ -7,7 +7,7 @@ export const profile = {
   phoneHref: 'tel:+918595947790',
   github: 'https://github.com/vineetsaini007',
   linkedin: 'https://www.linkedin.com/in/vineet-saini1111',
-  cv: '/vineet-saini-cv.pdf',
+  cv: '/resume_vineet_saini.pdf',
   about: "I'm Vineet, a full-stack developer based in New Delhi with 1+ year of experience building production React and Node.js applications. I work with TypeScript, MongoDB, PostgreSQL, REST APIs and cloud deployment, taking products from requirements to release.",
 };
 export const projects = [
