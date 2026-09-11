@@ -1,1 +1,27 @@
-export default function Architecture(){const blocks=[{x:300,y:305,w:85,h:160,c:'#1646ee'},{x:385,y:350,w:85,h:245,c:'#f7f7f3'},{x:215,y:350,w:85,h:75,c:'#f7f7f3'},{x:300,y:400,w:85,h:95,c:'#090909'},{x:470,y:400,w:85,h:145,c:'#f7f7f3'},{x:385,y:445,w:85,h:95,c:'#f7f7f3'},{x:385,y:155,w:44,h:70,c:'#090909'},{x:145,y:440,w:36,h:42,c:'#caff35'},{x:540,y:245,w:29,h:34,c:'#1646ee'}];return <svg className="architecture" viewBox="0 0 690 580" role="img" aria-label="Original isometric architecture of blue, white and lime modular cubes"><defs><pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#111"/></pattern><pattern id="grid" width="44" height="25.5" patternUnits="userSpaceOnUse" patternTransform="matrix(1 .58 -1 .58 345 300)"><path d="M44 0H0V25.5" fill="none" stroke="#d6d6d0" strokeWidth=".7"/></pattern></defs><path d="M45 365L350 190 665 372 360 551Z" fill="url(#grid)"/><path d="M165 460L380 335 592 458 378 582Z" fill="#111" opacity=".08"/><rect x="70" y="120" width="70" height="58" fill="url(#dots)"/><rect x="575" y="380" width="57" height="85" fill="url(#dots)"/>{blocks.map((b,i)=><g key={i} className={'geo-block block-'+i} stroke="#080808" strokeWidth="1.5" strokeLinejoin="round"><path d={`M${b.x} ${b.y-b.h} l${b.w} ${-b.w*.57} ${b.w} ${b.w*.57} -${b.w} ${b.w*.57}Z`} fill={i===4?'#caff35':'#f7f7f3'}/><path d={`M${b.x} ${b.y-b.h} l${b.w} ${b.w*.57} v${b.h} l${-b.w} ${-b.w*.57}Z`} fill={b.c}/><path d={`M${b.x+b.w} ${b.y-b.h+b.w*.57} l${b.w} ${-b.w*.57} v${b.h} l${-b.w} ${b.w*.57}Z`} fill={i===1||i===6?'#090909':'#e8e8e3'}/>{i===1&&<path d="M385 180l85 48m-85 4l85 48m-85 4l85 48" stroke="#90908d"/>}</g>)}<g stroke="#111" strokeWidth="1.3" fill="none"><path d="M90 290l45-26 45 26v52l-45 26-45-26Z M90 290l45 26 45-26M135 316v52"/><path d="M180 180h20m-10-10v20M575 105h20m-10-10v20"/><path d="M489 465l78 45 55-32m-43-32l-46 27m31-40l-46 27m31-40l-46 27"/></g><g fill="#1646ee"><rect x="200" y="94" width="10" height="10"/><rect x="108" y="425" width="8" height="8"/></g><g fontFamily="monospace" fontSize="10" fill="#73736e"><text x="66" y="392">X:014 / Y:220</text><text x="486" y="158">BUILD_01</text><text x="240" y="535">MODULAR BY DESIGN</text></g></svg>}
+import { useId } from "react";
+
+export default function Architecture() {
+  const id = useId().replace(/:/g, "");
+  const dots = `dots-${id}`;
+  const grid = `grid-${id}`;
+  const blocks = [
+    {x:300,y:305,w:85,h:160,c:'#1646ee'}, {x:385,y:350,w:85,h:245,c:'#f7f7f3'},
+    {x:215,y:350,w:85,h:75,c:'#f7f7f3'}, {x:300,y:400,w:85,h:95,c:'#090909'},
+    {x:470,y:400,w:85,h:145,c:'#f7f7f3'}, {x:385,y:445,w:85,h:95,c:'#f7f7f3'},
+    {x:385,y:155,w:44,h:70,c:'#090909'}, {x:145,y:440,w:36,h:42,c:'#caff35'},
+    {x:540,y:245,w:29,h:34,c:'#1646ee'},
+  ];
+  return <svg className="architecture" viewBox="0 0 690 580" role="img" aria-label="Original isometric architecture of blue, white and lime modular cubes">
+    <defs><pattern id={dots} width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#111"/></pattern><pattern id={grid} width="44" height="25.5" patternUnits="userSpaceOnUse" patternTransform="matrix(1 .58 -1 .58 345 300)"><path d="M44 0H0V25.5" fill="none" stroke="#d6d6d0" strokeWidth=".7"/></pattern></defs>
+    <g className="geo-background"><path d="M45 365L350 190 665 372 360 551Z" fill={`url(#${grid})`}/><path d="M165 460L380 335 592 458 378 582Z" fill="#111" opacity=".08"/><rect x="70" y="120" width="70" height="58" fill={`url(#${dots})`}/><rect x="575" y="380" width="57" height="85" fill={`url(#${dots})`}/></g>
+    {blocks.map((b,i) => <g key={i} className="geo-depth" data-depth={i < 3 ? 'back' : 'front'}><g className="geo-parallax"><g className={`geo-block block-${i}`} stroke="#080808" strokeWidth="1.5" strokeLinejoin="round">
+      <path d={`M${b.x} ${b.y-b.h} l${b.w} ${-b.w*.57} ${b.w} ${b.w*.57} -${b.w} ${b.w*.57}Z`} fill={i===4?'#caff35':'#f7f7f3'}/>
+      <path d={`M${b.x} ${b.y-b.h} l${b.w} ${b.w*.57} v${b.h} l${-b.w} ${-b.w*.57}Z`} fill={b.c}/>
+      <path d={`M${b.x+b.w} ${b.y-b.h+b.w*.57} l${b.w} ${-b.w*.57} v${b.h} l${-b.w} ${b.w*.57}Z`} fill={i===1||i===6?'#090909':'#e8e8e3'}/>
+      {i===1 && <path d="M385 180l85 48m-85 4l85 48m-85 4l85 48" stroke="#90908d"/>}
+    </g></g></g>)}
+    <g className="geo-wireframe" stroke="#111" strokeWidth="1.3" fill="none"><path d="M90 290l45-26 45 26v52l-45 26-45-26Z M90 290l45 26 45-26M135 316v52"/><path d="M180 180h20m-10-10v20M575 105h20m-10-10v20"/><path d="M489 465l78 45 55-32m-43-32l-46 27m31-40l-46 27m31-40l-46 27"/></g>
+    <g><rect className="geo-square" x="200" y="94" width="10" height="10" fill="#1646ee"/><rect className="geo-square" x="108" y="425" width="8" height="8" fill="#caff35"/></g>
+    <g fontFamily="monospace" fontSize="10" fill="#73736e"><text x="66" y="392">X:014 / Y:220</text><text x="486" y="158">BUILD_01</text><text x="240" y="535">MODULAR BY DESIGN</text></g>
+  </svg>;
+}

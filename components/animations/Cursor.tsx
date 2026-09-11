@@ -1,3 +1,31 @@
 "use client";
-import {useEffect,useRef} from 'react';
-export default function Cursor(){const ref=useRef<HTMLDivElement>(null);useEffect(()=>{const query=matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)');if(!query.matches)return;const cursor=ref.current;let frame=0;let x=0,y=0;const move=(e:PointerEvent)=>{x=e.clientX;y=e.clientY;if(!frame)frame=requestAnimationFrame(()=>{if(cursor){cursor.style.transform=`translate3d(${x+14}px,${y+14}px,0)`;cursor.style.opacity='1';const interactive=(document.elementFromPoint(x,y) as HTMLElement|null)?.closest('a,button');cursor.textContent=interactive?'OPEN':'';cursor.classList.toggle('expanded',!!interactive)}frame=0})};const hide=()=>{if(cursor)cursor.style.opacity='0'};document.addEventListener('pointermove',move);document.addEventListener('pointerleave',hide);const buttons=Array.from(document.querySelectorAll<HTMLElement>('.button.blue,.button.black,.connect'));const handlers=buttons.map(el=>{const enter=(e:PointerEvent)=>{const r=el.getBoundingClientRect();el.style.translate=`${(e.clientX-r.left-r.width/2)*.035}px ${(e.clientY-r.top-r.height/2)*.1}px`};const leave=()=>{el.style.translate='0 0'};el.addEventListener('pointermove',enter);el.addEventListener('pointerleave',leave);return()=>{el.removeEventListener('pointermove',enter);el.removeEventListener('pointerleave',leave);el.style.translate=''}});return()=>{document.removeEventListener('pointermove',move);document.removeEventListener('pointerleave',hide);cancelAnimationFrame(frame);handlers.forEach(clean=>clean())}},[]);return <div className="cursor-accent" ref={ref} aria-hidden="true"/>}
+import { useRef } from "react";
+import { useMotionScope, type MotionScope } from "@/hooks/useMotionScope";
+function cursorMotion({root, reduced, finePointer, cleanup}:MotionScope) {
+  if(reduced || !finePointer) return;
+  let frame=0,x=0,y=0;
+  let interactive=false;
+  const move=(e:PointerEvent)=>{
+    x=e.clientX; y=e.clientY;
+    interactive=!!(e.target as Element|null)?.closest?.("a,button");
+    if(!frame)frame=requestAnimationFrame(()=>{
+      root.style.transform=`translate3d(${x+14}px,${y+14}px,0)`;
+      root.style.opacity="1";
+      root.textContent=interactive?"OPEN":"";
+      root.classList.toggle("expanded",interactive);
+      frame=0;
+    });
+  };
+  const hide=()=>{root.style.opacity="0";};
+  document.addEventListener("pointermove",move,{passive:true});
+  document.addEventListener("pointerleave",hide);
+  window.addEventListener("blur",hide);
+  cleanup(()=>{
+    document.removeEventListener("pointermove",move);
+    document.removeEventListener("pointerleave",hide);
+    window.removeEventListener("blur",hide);
+    cancelAnimationFrame(frame);
+    root.removeAttribute("style");root.classList.remove("expanded");root.textContent="";
+  });
+}
+export default function Cursor(){const ref=useRef<HTMLDivElement>(null);useMotionScope(ref,cursorMotion);return <div className="cursor-accent" ref={ref} aria-hidden="true"/>}
