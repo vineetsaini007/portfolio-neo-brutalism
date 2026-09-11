@@ -102,7 +102,7 @@ function setupPortfolio(scope: MotionScope) {
   let rowTop = -1, rowIndex = 0;
   cards.forEach(card => {
     if (card.offsetTop !== rowTop) { rowTop = card.offsetTop; rowIndex = 0; }
-    const sequence = gsap.timeline({ delay: rowIndex++ * 0.075, scrollTrigger: enter(card), defaults: { ease: "power4.out" } });
+    const sequence = gsap.timeline({ delay: Math.min(rowIndex++, 3) * 0.075, scrollTrigger: enter(card), defaults: { ease: "power4.out" } });
     sequence.from(card, { clipPath: "inset(100% 0 0 0)", y: 18, duration: 0.6 })
       .from(card.querySelector(".project-preview"), { scale: 1.08, duration: 0.72 }, 0)
       .from(card.querySelector(".project-number"), { scale: 0.2, y: -12, rotation: -8, duration: 0.32, ease: "back.out(1.5)" }, 0.25);
@@ -245,6 +245,6 @@ function setupPortfolio(scope: MotionScope) {
   select<HTMLElement>(".button.blue,.button.black,.connect").forEach(button => parallax(button, Array.from(button.querySelectorAll(".magnetic-content")), 5));
 }
 
-export default function usePortfolioMotion(ref: RefObject<HTMLElement | null>) {
-  useMotionScope(ref, setupPortfolio);
+export default function usePortfolioMotion(ref: RefObject<HTMLElement | null>, enabled = true) {
+  useMotionScope(ref, setupPortfolio, enabled);
 }

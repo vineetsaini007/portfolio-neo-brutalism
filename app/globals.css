@@ -77,3 +77,35 @@
 .featured-playback>span{margin-left:5px}
 .featured-copy-slide h2{overflow-wrap:normal}
 @media(prefers-reduced-motion:reduce){.featured-slide{transition:none}}
+/* Horizontal project rail stays contained by the existing section border. */
+.projects-section{min-width:0;overflow:hidden;grid-template-columns:170px minmax(0,1fr)}
+.project-rail-shell{min-width:0;overflow:hidden}
+.project-rail-shell .project-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:clamp(240px,24vw,310px);overflow-x:auto;overflow-y:hidden;gap:14px;padding:16px;scroll-snap-type:x proximity;scroll-padding-inline:16px;overscroll-behavior-x:contain;scrollbar-color:var(--blue) var(--lime);scrollbar-width:auto}
+.project-rail-shell .project-card{scroll-snap-align:start}
+.project-grid::-webkit-scrollbar{height:12px}
+.project-grid::-webkit-scrollbar-track{background:var(--lime);border-top:1px solid #080808}
+.project-grid::-webkit-scrollbar-thumb{background:var(--blue);border:2px solid var(--lime)}
+.project-grid::-webkit-scrollbar-thumb:hover{background:#080808}
+.project-rail-controls{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1px solid #080808}
+.project-rail-controls>.mono{font-size:9px;letter-spacing:.5px}
+.project-rail-controls>.mono>span{color:var(--blue);margin-left:10px}
+.project-rail-controls>div{display:flex;gap:6px}
+.project-rail-controls button{display:grid;place-items:center;width:32px;height:30px;border:1px solid;background:var(--background)}
+.project-rail-controls button:hover:not(:disabled){background:var(--blue);color:white}
+.project-rail-controls button:disabled{opacity:.3;cursor:default}
+.entrance-loader{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;background:var(--background);background-image:linear-gradient(#deded655 1px,transparent 1px),linear-gradient(90deg,#deded655 1px,transparent 1px);background-size:36px 36px}
+.loader-window{width:min(620px,100%);border:2px solid #080808;box-shadow:10px 10px 0 #080808;background:var(--background)}
+.loader-bar{display:flex;justify-content:space-between;background:var(--blue);color:white;padding:12px 16px;border-bottom:2px solid #080808}
+.loader-content{padding:34px}
+.loader-mark{width:75px;height:75px;display:grid;place-content:center;grid-auto-flow:column;background:var(--lime);border:2px solid;font:800 43px 'Barlow Condensed';box-shadow:5px 5px 0 #080808;margin-bottom:28px}
+.loader-mark>span{color:var(--blue)}
+.loader-content>p{font-size:10px;margin-bottom:16px}
+.loader-title{font-size:clamp(26px,5.7vw,43px);font-weight:800;line-height:1.08;overflow:hidden}
+.loader-title>span{display:block}.loader-dot{color:var(--blue)}
+.loader-segments{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;border:1px solid;padding:4px;margin:28px 0 14px;height:23px}
+.loader-segments i{background:var(--blue)}.loader-segments i:nth-last-child(-n+4){background:var(--lime)}
+.loader-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:9px}
+.loader-footer button{border:0;border-bottom:1px solid;background:transparent;padding:5px 0;color:var(--blue);font:inherit}
+@media(max-width:1050px){.projects-section{grid-template-columns:140px minmax(0,1fr)}}
+@media(max-width:600px){.projects-section{display:block}.project-rail-shell .project-grid{grid-auto-columns:min(78vw,290px);padding:12px;scroll-padding-inline:12px}.loader-content{padding:24px 18px}.loader-window{box-shadow:6px 6px 0 #080808}.loader-footer{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.project-rail-shell .project-grid{scroll-behavior:auto;scroll-snap-type:none}}

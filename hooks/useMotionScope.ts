@@ -17,9 +17,10 @@ export type MotionScope = {
 export function useMotionScope<T extends HTMLElement>(
   ref: RefObject<T | null>,
   setup: (scope: MotionScope) => void,
+  enabled = true,
 ) {
   useLayoutEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || !enabled) return;
     gsap.registerPlugin(ScrollTrigger, SplitText);
     const root = ref.current;
     const media = gsap.matchMedia();
@@ -45,7 +46,7 @@ export function useMotionScope<T extends HTMLElement>(
       };
     }, root);
     return () => media.revert();
-  }, [ref, setup]);
+  }, [ref, setup, enabled]);
 }
 
 export { gsap, ScrollTrigger, SplitText };
