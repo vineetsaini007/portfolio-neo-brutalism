@@ -1,5 +1,5 @@
 import {ArrowUpRight} from 'lucide-react';
-import {hasSpecialPreview,SpecialProjectPreview} from './SpecialProjectPreview';
+import {hasLiveSitePreview,LiveSitePreview} from './LiveSitePreview';
 
 function LearningPreview(){return <><div className="mock-heading">Your next chapter starts here.</div><div className="mock-label">JAVASCRIPT / FOUR-WEEK PATH</div>{['Find your foundations','Think in functions','Bring the page to life','Build something real'].map((title,index)=><div className="mock-row" key={title}><i>{String(index+1).padStart(2,'0')}</i><span>{title}<small>{index===0?'Start here':'Learn · practice · build'}</small></span></div>)}<div className="editor-status"><span>15 curated resources</span><span>AI assisted</span></div></>}
 
@@ -11,8 +11,12 @@ function CryptoPreview(){return <><div className="mock-heading">Market overview 
 
 function TransportPreview(){return <><div className="mock-heading">Operations overview</div><div className="transport-stats"><div><strong>24</strong>ACTIVE TRIPS</div><div><strong>86</strong>VEHICLES</div><div><strong>98%</strong>ON TIME</div></div><div className="mock-label">ONGOING TRIPS</div>{['TRP—2048','TRP—2049','TRP—2050','TRP—2051'].map((trip,index)=><div className="mock-row" key={trip}><span>{trip}</span><span>{['Delhi → Jaipur','Mumbai → Pune','Delhi → Agra','Pune → Nashik'][index]}</span><small>IN TRANSIT</small></div>)}</>}
 
-function PreviewBody({kind}:{kind:string}){if(hasSpecialPreview(kind))return <SpecialProjectPreview kind={kind}/>;if(kind==='learning')return <LearningPreview/>;if(kind==='wallet')return <WalletPreview/>;if(kind==='editor')return <EditorPreview/>;if(kind==='crypto')return <CryptoPreview/>;return <TransportPreview/>}
+function PreviewBody({kind}:{kind:string}){if(kind==='learning')return <LearningPreview/>;if(kind==='wallet')return <WalletPreview/>;if(kind==='editor')return <EditorPreview/>;if(kind==='crypto')return <CryptoPreview/>;return <TransportPreview/>}
 
 const logos:Record<string,string>={wallet:'p/ payzo',editor:'⌘ codesyncx',crypto:'◈ cryptoradar',learning:'↗ devpath',transport:'▤ transport / os',portfolio:'VS/ selected work',flowpilot:'⚡ flowpilot',launchcraft:'↗ launchcraft'};
 
-export default function ProjectPreview({kind,large=false}:{kind:string;large?:boolean}){return <div className={`project-preview ${kind} ${large?'large':''}`} aria-label="Illustrative project interface, not a live application"><div className="mock-top"><span className="mock-logo">{logos[kind]??'▤ project'}</span><span>•••</span></div><div className="mock-body"><div className="mock-sidebar"><span className="selected">◫</span><span>◈</span><span>▤</span><span>⚙</span></div><div className="mock-content"><PreviewBody kind={kind}/></div></div><div className="preview-caption">INTERFACE CONCEPT <ArrowUpRight size={10}/></div></div>}
+export default function ProjectPreview({kind,large=false}:{kind:string;large?:boolean}){
+  if(hasLiveSitePreview(kind))return <LiveSitePreview kind={kind} large={large}/>;
+
+  return <div className={`project-preview ${kind} ${large?'large':''}`} aria-label="Illustrative project interface, not a live application"><div className="mock-top"><span className="mock-logo">{logos[kind]??'▤ project'}</span><span>•••</span></div><div className="mock-body"><div className="mock-sidebar"><span className="selected">◫</span><span>◈</span><span>▤</span><span>⚙</span></div><div className="mock-content"><PreviewBody kind={kind}/></div></div><div className="preview-caption">INTERFACE CONCEPT <ArrowUpRight size={10}/></div></div>;
+}
