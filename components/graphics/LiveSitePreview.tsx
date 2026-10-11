@@ -6,6 +6,7 @@ const siteCaptures:Record<string,{src:string;alt:string}>={
   portfolio:{src:'/project-thumbnails/dev-portfolio.png',alt:'Developer portfolio homepage with oversized introduction and illustrated portrait'},
   flowpilot:{src:'/project-thumbnails/flowpilot.png',alt:'FlowPilot AI productivity landing page with dark interface and lime typography'},
   launchcraft:{src:'/project-thumbnails/launchcraft.png',alt:'LaunchCraft course landing page with bold blue, orange and yellow campaign design'},
+  firstline:{src:'/project-thumbnails/firstline.jpg',alt:'Real screenshot of Firstline’s live email workspace with collapsible application context and a labeled fictional example email'},
 };
 
 export function hasLiveSitePreview(kind:string){return kind in siteCaptures;}
